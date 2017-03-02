@@ -1,11 +1,27 @@
 
 import Foundation
 
+/** A callback when command is fired
+ 
+ The closure that tells whether command is running or not.
+ */
 public typealias CommandClosure = ((_ started: Bool)->())
+
+/** A callback when suggestion is fired
+ 
+ The closure that tells whether suggestion is running or not.
+ */
 public typealias SuggestionClosure = ((_ started: Bool)->())
+
+/**
+ Custom logging closure to check for debugs information.
+ 
+ The closure sends the `text` that will be logged.
+ */
 public typealias LogClosure = ((_ text: String)->())
 
 
+/// `Prompt` is a utility class for user suggestion or command.
 open class Prompt {
     
     fileprivate var isRunningCommandCenter: Bool = false
@@ -17,7 +33,9 @@ open class Prompt {
     fileprivate init() { }
     
     /**
+     Man in the middle (MITM) incoming text to parse and check for commands or suggestions
      
+     - parameter text: input text to parse
      */
     open func mitm(text: String) {
         let sanitizedText = text.trimmingCharacters(in: .whitespaces)
@@ -64,6 +82,10 @@ private extension String {
     
 }
 
+/** Factory class to crate `Prompt` for command or user suggestion.
+ 
+    - SeeAlso `Prompt`
+ */
 public struct PromptFactory {
     
     private var prompt: Prompt = Prompt()
